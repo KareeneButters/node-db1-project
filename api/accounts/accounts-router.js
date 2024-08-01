@@ -1,18 +1,19 @@
 const router = require('express').Router()
 const md = require('./accounts-middleware')
+const Account = require('./accounts-model')
 
-router.get('/', (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/', async (req, res, next) => {
   try{
+    const accounts = await Account.getAll()
     res.json('get accounts')
   } catch (err) {
     next(err)
   }
 })
 
-router.get('/:id', md.checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/:id', md.checkAccountId, async (req, res, next) => {
   try{
+    const account = await Account.getById(req.params.id)
     res.json('get accounts by id')
   } catch (err) {
     next(err)
